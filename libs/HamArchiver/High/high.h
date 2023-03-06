@@ -1,0 +1,34 @@
+#include "../Low/low.h"
+struct Meta {
+    unsigned char codeword_length;
+    bool parity_bit;
+    unsigned char filename_size;
+    std::string filename;
+    unsigned long long file_size;
+    void Put(std::ofstream& output);
+    void WritingMeta(std::bitset<MAX_MATRIX_LENGTH> inp, std::ofstream& output, char bytes_quantity);
+    std::bitset<MAX_MATRIX_LENGTH> ReadingMeta(std::ifstream& input, char bytes_quantity);
+    void Get(std::ifstream& input);
+};
+unsigned long long GetNewSize(unsigned long long file_size, unsigned char codeword_length, bool parity_bit);
+unsigned long long GetFileSize(const char* filename);
+std::string GetFilename(const char* path);
+std::string GetPath(const char* path);
+std::string GetExtension(const char* path);
+std::set<std::string> GetList(const char* archive);
+std::set<std::string> VectToSet(std::vector<const char*>& filenames);
+void Deleting(std::ifstream& input, std::ofstream& output, std::set<std::string>& must_be_deleted);
+bool CheckFiles(std::set<std::string>& must_be_deleted, const char* archive);
+void Delete(const char* archive, std::vector<const char*>& filenames, bool from_extraction = false);
+bool Appending (std::ofstream& output, const char* archive, const char* file, std::set<std::string>& list, unsigned char codeword_length, bool parity_bit);
+void Append(const char* archive, std::vector<const char*>& filenames, unsigned char codeword_length, bool parity_bit);
+bool FindFile(std::ifstream& input, Meta& meta, unsigned long long archive_size, const char* filename);
+bool ExtractingOverwritingDialog(bool call, std::string& filename);
+bool ExtractingDeletingDialog(bool call, std::string& filename);
+void Extracting(const char* archive, const char* filename, std::vector<std::string>& must_be_deleted, char all = false);
+void Extract(const char* archive, std::vector<const char*>& filenames);
+void List(const char* archive);
+bool ConcatenatingFile(std::ofstream& output, std::ifstream& input, const char* archive, std::set<std::string>& list, Meta& meta);
+void Concatenating(std::ofstream& output, std::set<std::string>& list, const char* archive, const char* concatenating_archive);
+void Concatenate(const char* archive, std::vector<const char*>& filenames);
+void Create(const char* archive);
